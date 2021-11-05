@@ -17,9 +17,13 @@
         :details="details"
         :id="bookingId"
       />
-      <EditBooking @reload-booking="reload" v-if="showEdit" :details="details" :id="bookingId" />
+      <EditBooking
+        @reload-booking="reload"
+        v-if="showEdit"
+        :details="details"
+        :id="bookingId"
+      />
     </div>
-
   </div>
 </template>
 
@@ -42,21 +46,23 @@ export default {
     };
   },
   methods: {
-    reload(id){
-      this.loadBooking(id)
+    reload(id) {
+      this.loadBooking(id);
     },
     toggleEdit() {
       this.showEdit = !this.showEdit;
     },
     async loadBooking(id) {
-      try {
-        const resp = await axios.get(id);
-        this.details = resp.data;
-        this.showBooking = true;
-      } catch (err) {
-        console.error(err);
-        alert("Booking error");
-      }
+      await axios
+        .get(id)
+        .then((resp) => {
+          this.details = resp.data;
+          this.showBooking = true;
+        })
+        .catch((message) => {
+          alert(`Failed to get booking ${id}`);
+          console.log(`Booking fetch failed ${message}`);
+        });
     },
   },
 };
@@ -72,8 +78,7 @@ export default {
   width: 1000px;
 }
 
-.input-field{
+.input-field {
   margin-top: 50px;
 }
-
 </style>

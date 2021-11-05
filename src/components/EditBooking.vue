@@ -79,14 +79,16 @@ export default {
   },
   methods: {
     async updateBooking() {
-      try {
-        await axios.put(this.id, this.bookingDetails);
-        alert("Booking has been updated")
-        this.$emit("reloadBooking",this.id);
-      } catch (err) {
-        console.error(err);
-        alert("Booking error");
-      }
+      await axios
+        .put(this.id, this.bookingDetails)
+        .then(() => {
+          alert("Booking has been updated");
+          this.$emit("reloadBooking", this.id);
+        })
+        .catch((message) => {
+          console.log(`Error updating booking ${this.id} `);
+          alert(`Error updating booking ${message}`);
+        });
     },
   },
 };

@@ -39,8 +39,8 @@
         placeholder="Room number"
       />
       <input type="submit" value="Submit" />
-      <input v-model="bookingDetails.arrival" type="datetime" name="" id="" />
-      <input v-model="bookingDetails.departure" type="datetime" name="" id="" />
+      <input v-model="bookingDetails.arrival" type="datetime"  />
+      <input v-model="bookingDetails.departure" type="datetime" />
     </form>
   </div>
 </template>
@@ -65,36 +65,38 @@ export default {
           code: "200-A",
         },
       },
-      
     };
   },
   methods: {
     async createBooking() {
-      try {
-        await axios.post(this.randomString, this.bookingDetails);
-        alert(`Booking has been created ${this.randomString}`);
-      } catch (err) {
-        console.error(err);
-        alert("Booking error");
-      }
+      await axios
+        .post(this.randomString, this.bookingDetails)
+        .then(() => {
+          alert(`Booking has been created: ${this.randomString}`);
+        })
+        .catch((message) => {
+          alert("Booking creation failed");
+          console.log(`Booking creation failed ${message}`);
+        });
     },
   },
-  computed:{
-    randomString(){
-      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz123456789";
+  computed: {
+    randomString() {
+      const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz123456789";
 
       //specify the length for the new string
       const lenString = 5;
       let randomstring = "";
 
       //loop to select a new character in each iteration
-      for (var i = 0; i < lenString; i++) {
-        var rnum = Math.floor(Math.random() * characters.length);
+      for (let i = 0; i < lenString; i++) {
+        let rnum = Math.floor(Math.random() * characters.length);
         randomstring += characters.substring(rnum, rnum + 1);
       }
-      return randomstring
-    }
-  }
+      return randomstring;
+    },
+  },
 };
 </script>
 
