@@ -1,4 +1,4 @@
-# booking
+# internship-hotel
 
 ## Project setup
 ```
