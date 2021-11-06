@@ -38,9 +38,9 @@
         type="text"
         placeholder="Room number"
       />
+      <input v-model="bookingDetails.arrival" type="datetime-local" />
+      <input v-model="bookingDetails.departure" type="datetime-local" />
       <input type="submit" value="Submit" />
-      <input v-model="bookingDetails.arrival" type="datetime"  />
-      <input v-model="bookingDetails.departure" type="datetime" />
     </form>
   </div>
 </template>
@@ -53,8 +53,8 @@ export default {
       bookingDetails: {
         type: "accommodation",
         state: "expected",
-        arrival: "2032-12-13T14:00:00.000Z",
-        departure: "2032-12-21T11:00:00.000Z",
+        arrival: "",
+        departure: "",
         guest: {
           firstName: "Vue",
           lastName: "Beautiful",
@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     async createBooking() {
+      this.setTime()
       await axios
         .post(this.randomString, this.bookingDetails)
         .then(() => {
@@ -78,7 +79,15 @@ export default {
           alert("Booking creation failed");
           console.log(`Booking creation failed ${message}`);
         });
+
     },
+    setTime(){
+      let arrivalDate = new Date(this.bookingDetails.arrival).toISOString();
+      this.bookingDetails.arrival = arrivalDate;
+
+      let departureDate = new Date(this.bookingDetails.departure).toISOString();
+      this.bookingDetails.departure = departureDate;
+    }
   },
   computed: {
     randomString() {

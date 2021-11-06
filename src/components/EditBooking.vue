@@ -39,10 +39,10 @@
           type="text"
           placeholder="Room number"
         />
-        <input v-model="bookingDetails.arrival" type="datetime" />
+        <input v-model="bookingDetails.arrival" type="datetime-local" />
         <input
           v-model="bookingDetails.departure"
-          type="datetime"
+          type="datetime-local"
           name=""
           id=""
         />
@@ -63,8 +63,8 @@ export default {
       bookingDetails: {
         type: "accommodation",
         state: "",
-        arrival: "2032-12-13T14:00:00.000Z",
-        departure: "2032-12-21T11:00:00.000Z",
+        arrival: "",
+        departure: "",
         guest: {
           firstName: "",
           lastName: "",
@@ -79,6 +79,7 @@ export default {
   },
   methods: {
     async updateBooking() {
+      this.setTime()
       await axios
         .put(this.id, this.bookingDetails)
         .then(() => {
@@ -90,6 +91,13 @@ export default {
           alert(`Error updating booking ${message}`);
         });
     },
+     setTime(){
+      let arrivalDate = new Date(this.bookingDetails.arrival).toISOString();
+      this.bookingDetails.arrival = arrivalDate;
+
+      let departureDate = new Date(this.bookingDetails.departure).toISOString();
+      this.bookingDetails.departure = departureDate;
+    }
   },
 };
 </script>

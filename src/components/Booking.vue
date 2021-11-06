@@ -52,15 +52,15 @@ export default {
     arrivalTime() {
       const date = new Date(this.details.arrival);
       return (
-        date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate()
+        date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate() + " ::: " + date.getHours() + " " + date.getMinutes() + " local time"
       );
     },
     departureTime() {
       const date = new Date(this.details.departure);
       return (
-        date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate()
+        date.getFullYear() + " " + (date.getMonth() + 1) + " " + date.getDate() + " ::: " + date.getHours() + " " + date.getMinutes() + " local time"
       );
-    },
+    }, 
   },
 };
 </script>
